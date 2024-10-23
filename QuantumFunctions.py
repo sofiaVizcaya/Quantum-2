@@ -1,4 +1,3 @@
-
 import math
 import numpy as np
 from numpy.linalg import eig
@@ -10,7 +9,6 @@ def Probability_at_State(Array,Location):
     denominator = np.linalg.norm(Array)**2
     Y = (np.linalg.norm(Array[Location])**2)/denominator
     return(str(float(Y*100))+"%")
-
 def amplitud_vector(Array, Array_1):
     np.array(Array),np.array(Array_1)
     denominator = np.linalg.norm(Array)
@@ -50,25 +48,27 @@ def Hermitian_mat(Array):
     A = []
     for i in M:
         A.append(np.conjugate(i))
-    if np.array(A) == Array:
+    if (np.array(A)).all() == (np.array(Array)).all():
         return True
     else:
         return False
 def MeanandVariance(Array, Array_1):
     if Hermitian_mat(Array):
-        #find the varianza
-        Media = Array * (Array_1 * Array_1)
-        Array_2 = (Array - (Media *(np.eye(len(Array)))))**2
-        return ("The variace is : " + str(Array_2 * Array_1))        
+        pre_Media = np.multiply(Array_1,Array_1)
+        Media = np.multiply(Array,pre_Media)
+        print(Media)
+        Array_2 = (Array - (Media @(np.eye(len(Array)))))**2
+        return ("The variace is : " + str(Array_2 * Array_1))
     else:
         return "The matrix is nor hermitian. It is not posible to return it's variance"
-        
+
+
 def EigenValuesProbability(Array, Array_1):
     print(np.linalg.eig(Array))
     Probability_one_state_to_other(Array, Array_1)
     return
 def FinalState(Unitary,t):
-    #assuming that the matrix is unitary and there is no obserbable we can use this function 
+    #assuming that the matrix is unitary and there is no obserbable we can use this function
     if len(Unitary) == t:
         Final_State = []
         time = 0
@@ -82,7 +82,6 @@ def FinalState(Unitary,t):
         return r
     else:
         return("Check that your using the right amount of time or that your using the right amount of variables on the Un")
-    
-            
+
          
 
